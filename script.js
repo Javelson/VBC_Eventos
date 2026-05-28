@@ -11,12 +11,13 @@ const db = createClient(
 );
 
 // --- Countdown Timer ---
-function initCountdown() {
-  const target = new Date("2026-06-06T15:00:00+01:00").getTime();
+let countdownTarget = new Date("2026-06-06T15:00:00+01:00").getTime();
+let countdownInterval = null;
 
+function initCountdown() {
   function update() {
     const now = Date.now();
-    const diff = target - now;
+    const diff = countdownTarget - now;
 
     if (diff <= 0) {
       document.getElementById("cd-days").textContent = "00";
@@ -38,7 +39,71 @@ function initCountdown() {
   }
 
   update();
-  setInterval(update, 1000);
+  countdownInterval = setInterval(update, 1000);
+}
+
+// --- Event Details Loading ---
+async function loadEventDetails() {
+  try {
+    const keys = ["event_title", "event_badge", "event_description", "event_date", "event_time_display", "event_platform", "event_duration"];
+    const { data } = await db
+      .from("settings")
+      .select("key, value")
+      .in("key", keys);
+
+    if (!data || data.length === 0) return;
+
+    const settings = {};
+    data.forEach((row) => { settings[row.key] = row.value; });
+
+    if (settings.event_badge) {
+      const badgeEl = document.getElementById("event-badge");
+      if (badgeEl) badgeEl.textContent = settings.event_badge;
+    }
+
+    if (settings.event_title) {
+      const titleEl = document.getElementById("event-title");
+      if (titleEl) titleEl.innerHTML = settings.event_title;
+    }
+
+    if (settings.event_description) {
+      const descEl = document.getElementById("event-description");
+      if (descEl) descEl.textContent = settings.event_description;
+    }
+
+    if (settings.event_date) {
+      const eventDate = new Date(settings.event_date);
+      countdownTarget = eventDate.getTime();
+      if (countdownInterval) clearInterval(countdownInterval);
+      initCountdown();
+
+      const dateEl = document.getElementById("event-date");
+      if (dateEl) {
+        dateEl.textContent = eventDate.toLocaleDateString("pt-PT", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        });
+      }
+    }
+
+    if (settings.event_time_display) {
+      const timeEl = document.getElementById("event-time");
+      if (timeEl) timeEl.textContent = settings.event_time_display;
+    }
+
+    if (settings.event_platform) {
+      const platformEl = document.getElementById("event-platform");
+      if (platformEl) platformEl.textContent = settings.event_platform;
+    }
+
+    if (settings.event_duration) {
+      const durationEl = document.getElementById("event-duration");
+      if (durationEl) durationEl.textContent = settings.event_duration;
+    }
+  } catch (err) {
+    console.warn("Event details not available:", err);
+  }
 }
 
 // --- Flyer Loading ---
@@ -167,5 +232,6 @@ function initForm() {
 
 // --- Init ---
 initCountdown();
+loadEventDetails();
 loadFlyer();
 initForm();

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eventos - FortiGate Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../admin-style.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Top Bar -->
+    <header class="admin-topbar">
+      <a href="../index.html" class="admin-topbar-brand">
+        <img src="../public/logotipo/vbc.logo.jpeg" alt="VB Conexao" class="admin-topbar-logo" />
+        <span class="admin-topbar-title">FortiGate Admin</span>
+      </a>
+      <div class="admin-topbar-user">
+        <span class="admin-topbar-email" id="user-email"></span>
+        <button class="btn-logout" id="btn-logout">Sair</button>
+      </div>
+    </header>
+
+    <!-- Nav Menu -->
+    <nav class="admin-nav">
+      <a href="index.html" class="admin-nav-link">Dashboard</a>
+      <a href="events.html" class="admin-nav-link active">Eventos</a>
+    </nav>
+
+    <!-- Content -->
+    <main class="admin-content">
+      <!-- Event Details -->
+      <div class="flyer-manager">
+        <div class="flyer-manager-title">Detalhes do Evento</div>
+        <form id="event-details-form" novalidate>
+          <div class="event-form-grid">
+            <div class="form-group">
+              <label class="form-label" for="ev-title">Titulo do Evento (HTML)</label>
+              <input type="text" id="ev-title" class="form-input" placeholder='Ex: &lt;span class="accent"&gt;FortiGate&lt;/span&gt; Experience' />
+              <div class="form-hint">Pode usar &lt;span class="accent"&gt;texto&lt;/span&gt; para destaque</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ev-badge">Badge / Tag</label>
+              <input type="text" id="ev-badge" class="form-input" placeholder="Ex: Workshop Tecnico" />
+            </div>
+            <div class="form-group" style="grid-column:1/-1">
+              <label class="form-label" for="ev-description">Descricao</label>
+              <textarea id="ev-description" class="form-input" rows="3" placeholder="Descricao do evento..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ev-date">Data e Hora do Evento</label>
+              <input type="datetime-local" id="ev-date" class="form-input" />
+              <div class="form-hint">Usada no countdown e na data exibida</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ev-time-display">Horario (exibicao)</label>
+              <input type="text" id="ev-time-display" class="form-input" placeholder="Ex: 15h00 - 17h00" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ev-platform">Plataforma</label>
+              <input type="text" id="ev-platform" class="form-input" placeholder="Ex: Microsoft Teams" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ev-duration">Duracao</label>
+              <input type="text" id="ev-duration" class="form-input" placeholder="Ex: 2 horas (pratica)" />
+            </div>
+          </div>
+          <div class="error-text" id="ev-error" style="margin-top:0.5rem"></div>
+          <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+            <button type="submit" class="btn-action btn-edit" id="btn-save-event" style="padding:0.5rem 1.5rem;font-size:0.9rem">Guardar Detalhes</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="../admin-events.js"></script>
+</body>
+</html>

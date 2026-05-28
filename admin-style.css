@@ -50,6 +50,33 @@
   background-color: var(--vbc-gray-light);
 }
 
+/* --- Admin Nav --- */
+.admin-nav {
+  background-color: var(--white);
+  border-bottom: 1px solid var(--vbc-gray);
+  padding: 0 1.5rem;
+  display: flex;
+  gap: 0;
+}
+
+.admin-nav-link {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.admin-nav-link:hover {
+  color: var(--vbc-blue);
+}
+
+.admin-nav-link.active {
+  color: var(--vbc-blue);
+  border-bottom-color: var(--vbc-blue);
+}
+
 .admin-topbar {
   background-color: var(--white);
   border-bottom: 1px solid var(--vbc-gray);
@@ -173,6 +200,28 @@
 
 .btn-flyer-remove:hover {
   opacity: 0.8;
+}
+
+/* --- Event Details Form --- */
+.event-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .event-form-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.event-form-grid textarea.form-input {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.form-hint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
 }
 
 /* --- Stats Grid --- */
