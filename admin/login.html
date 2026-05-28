@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - FortiGate Experience</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../admin-style.css" />
+</head>
+<body>
+  <div class="admin-login">
+    <div class="login-card">
+      <img src="../public/logotipo/vbc.logo.jpeg" alt="VB Conexao" class="login-logo" />
+      <h1 class="login-title">FortiGate Experience</h1>
+      <p class="login-subtitle">Painel Administrativo</p>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="email">E-mail</label>
+          <input type="email" id="email" class="form-input" placeholder="admin@vbc.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-input" placeholder="********" required />
+        </div>
+        <div class="error-text" id="login-error" style="margin-bottom:1rem;text-align:center"></div>
+        <button type="submit" id="btn-login" class="btn-submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const db = createClient(
+      "https://opcsqdjyyxahxiyxlwpv.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wY3NxZGp5eXhhaHhpeXhsd3B2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NzYyMDUsImV4cCI6MjA5NTQ1MjIwNX0.X_Zx7cmbdYwbUp7eOjy2SgDqxVefA2oBSGN-vFysB5U"
+    );
+
+    // Check if already logged in
+    const { data: { session } } = await db.auth.getSession();
+    if (session) window.location.href = "index.html";
+
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const btn = document.getElementById("btn-login");
+      const errorEl = document.getElementById("login-error");
+
+      errorEl.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "A entrar...";
+
+      const { error } = await db.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        errorEl.textContent = "Credenciais invalidas.";
+        btn.disabled = false;
+        btn.textContent = "Entrar";
+        return;
+      }
+
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

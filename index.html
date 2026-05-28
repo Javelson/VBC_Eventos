@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FortiGate Experience - VB Conexao</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <!-- Header -->
+    <header class="header">
+      <a href="/" class="header-brand">
+        <img src="public/logotipo/vbc.logo.jpeg" alt="VB Conexao" class="header-logo" />
+        <span class="header-title">VB Conexao</span>
+      </a>
+      <a href="admin/login.html" class="header-admin" title="Painel Admin">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+      </a>
+    </header>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <!-- Left Column -->
+      <div>
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Workshop Tecnico
+        </div>
+
+        <h1 class="hero-title">
+          <span class="accent">FortiGate</span> Experience
+        </h1>
+
+        <p class="hero-description">
+          Uma experiencia pratica e imersiva sobre seguranca de rede com FortiGate.
+          Aprende, configura e conecta-te com profissionais da area.
+        </p>
+
+        <!-- Event Details -->
+        <div class="event-grid">
+          <div class="event-card">
+            <span class="event-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </span>
+            <span class="event-card-label">Data</span>
+            <span class="event-card-value">06 de Junho, 2026</span>
+          </div>
+          <div class="event-card">
+            <span class="event-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </span>
+            <span class="event-card-label">Horario</span>
+            <span class="event-card-value">15h00 - 17h00</span>
+          </div>
+          <div class="event-card">
+            <span class="event-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </span>
+            <span class="event-card-label">Plataforma</span>
+            <span class="event-card-value">Microsoft Teams</span>
+          </div>
+          <div class="event-card">
+            <span class="event-card-icon">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </span>
+            <span class="event-card-label">Duracao</span>
+            <span class="event-card-value">2 horas (pratica)</span>
+          </div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown">
+          <div class="countdown-block">
+            <div class="countdown-value" id="cd-days">--</div>
+            <div class="countdown-label">Dias</div>
+          </div>
+          <div class="countdown-block">
+            <div class="countdown-value" id="cd-hours">--</div>
+            <div class="countdown-label">Hrs</div>
+          </div>
+          <div class="countdown-block">
+            <div class="countdown-value" id="cd-mins">--</div>
+            <div class="countdown-label">Min</div>
+          </div>
+          <div class="countdown-block">
+            <div class="countdown-value" id="cd-secs">--</div>
+            <div class="countdown-label">Seg</div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <a href="#inscricao" class="btn-primary">
+          Inscreve-te agora
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <!-- Right Column: Flyer -->
+      <div class="flyer-container hidden" id="flyer-wrapper">
+        <img id="flyer-image" src="" alt="FortiGate Experience Flyer" class="flyer-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REGISTRATION ===================== -->
+  <section class="section-register" id="inscricao">
+    <div class="register-container">
+      <h2 class="section-title">Inscreve-te <span class="accent">agora</span></h2>
+      <p class="section-subtitle">Garante a tua vaga no workshop FortiGate Experience</p>
+
+      <div class="register-card">
+        <!-- Form Content -->
+        <div id="form-content">
+          <form id="register-form" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="nome">Nome completo</label>
+              <input type="text" id="nome" class="form-input" placeholder="Ex: Joao Silva" required />
+              <div class="error-text" id="nome-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">E-mail</label>
+              <input type="email" id="email" class="form-input" placeholder="Ex: joao@empresa.com" required />
+              <div class="error-text" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="telefone">N. de Telefone</label>
+              <input type="tel" id="telefone" class="form-input" placeholder="Ex: +351 912 345 678" required />
+              <div class="error-text" id="telefone-error"></div>
+            </div>
+
+            <button type="submit" id="btn-submit" class="btn-submit">Enviar Inscricao</button>
+          </form>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message" class="success-message hidden">
+          <div class="success-icon">&#10003;</div>
+          <div class="success-title">Inscricao confirmada!</div>
+          <p class="success-text">Receberas um e-mail com os detalhes em breve.</p>
+          <button id="btn-another" class="btn-secondary">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Inscrever outro participante
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="public/logotipo/vbc.logo.jpeg" alt="VB Conexao" class="footer-logo" />
+        <div>
+          <div class="footer-text">&copy; 2026 FortiGate Experience &mdash; VB Conexao</div>
+          <div class="footer-credit">Workshop organizado por VB Conexao</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <!-- App Logic -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
