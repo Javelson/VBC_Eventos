@@ -189,15 +189,18 @@ async function confirmSubscriber(id) {
       }),
     });
 
-    const emailData = await emailRes.json();
+    const responseText = await emailRes.text();
+    let emailData = {};
+    try { emailData = JSON.parse(responseText); } catch (e) { emailData = { error: responseText }; }
+
     if (emailRes.ok && emailData.success) {
       emailStatus = " E-mail enviado!";
     } else {
-      emailStatus = " (E-mail: " + (emailData.error || "erro desconhecido") + ")";
-      console.error("Resend error:", emailData);
+      emailStatus = " (E-mail: " + (emailData.error || "erro " + emailRes.status) + ")";
+      console.error("Resend error:", emailRes.status, responseText);
     }
   } catch (err) {
-    emailStatus = " (E-mail: falha na conexao)";
+    emailStatus = " (E-mail: falha na conexao - " + err.message + ")";
     console.warn("Erro ao enviar e-mail:", err);
   }
 
