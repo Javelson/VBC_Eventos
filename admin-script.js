@@ -112,92 +112,25 @@ async function confirmSubscriber(id) {
     return;
   }
 
-  // Enviar e-mail de confirmacao via Netlify Function
+  // Enviar e-mail de confirmacao via PHP
   let emailStatus = "";
   try {
-    const emailRes = await fetch("/.netlify/functions/send-email", {
+    const emailRes = await fetch("/api/confirmar.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        to: sub.email,
-        subject: "Inscricao Confirmada - VB Conexao",
-        html: `
-          <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f4f4f4;padding:40px 20px">
-            <div style="background:#ffffff;border-radius:12px;padding:40px 30px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
-              <!-- Header -->
-              <div style="text-align:center;margin-bottom:30px">
-                <div style="background:#005696;color:#ffffff;display:inline-block;padding:8px 20px;border-radius:6px;font-size:14px;font-weight:600;letter-spacing:0.5px">VB Conexao</div>
-              </div>
-
-              <!-- Confirmacao -->
-              <div style="text-align:center;margin-bottom:30px">
-                <div style="background:#22c55e;color:#ffffff;width:60px;height:60px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:16px">&#10003;</div>
-                <h1 style="color:#1a1a1a;font-size:24px;margin:0 0 8px">Inscricao Confirmada!</h1>
-                <p style="color:#666;font-size:16px;margin:0">A sua presenca foi confirmada com sucesso.</p>
-              </div>
-
-              <!-- Mensagem -->
-              <div style="background:#f0f9ff;border-left:4px solid #005696;padding:20px;border-radius:0 8px 8px 0;margin-bottom:30px">
-                <p style="color:#333;font-size:15px;line-height:1.6;margin:0">
-                  Olá <strong>${sub.nome}</strong>,<br><br>
-                  Temos o prazer de confirmar a sua inscricao no evento <strong>FortiGate Experience</strong>.
-                  Prepararamos uma experiencia unica e imersiva sobre seguranca de rede que nao vai querer perder!
-                </p>
-              </div>
-
-              <!-- Detalhes do Evento -->
-              <div style="background:#fafafa;border-radius:8px;padding:24px;margin-bottom:30px">
-                <h3 style="color:#005696;font-size:16px;margin:0 0 16px;text-transform:uppercase;letter-spacing:1px">Detalhes do Evento</h3>
-                <table style="width:100%;border-collapse:collapse">
-                  <tr>
-                    <td style="padding:8px 0;color:#666;font-size:14px;width:30px">&#128197;</td>
-                    <td style="padding:8px 0;color:#333;font-size:14px"><strong>Data:</strong> 06 de Junho, 2026</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:8px 0;color:#666;font-size:14px">&#128336;</td>
-                    <td style="padding:8px 0;color:#333;font-size:14px"><strong>Horario:</strong> 15h00 - 17h00</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:8px 0;color:#666;font-size:14px">&#128187;</td>
-                    <td style="padding:8px 0;color:#333;font-size:14px"><strong>Plataforma:</strong> Microsoft Teams</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:8px 0;color:#666;font-size:14px">&#9889;</td>
-                    <td style="padding:8px 0;color:#333;font-size:14px"><strong>Duracao:</strong> 2 horas (pratica)</td>
-                  </tr>
-                </table>
-              </div>
-
-              <!-- CTA -->
-              <div style="text-align:center;margin-bottom:30px">
-                <p style="color:#333;font-size:15px;line-height:1.6;margin:0">
-                  Em breve recebera o link de acesso e mais instrucoes por e-mail.<br>
-                  Fique atento(a) a sua caixa de entrada!
-                </p>
-              </div>
-
-              <!-- Footer -->
-              <div style="border-top:1px solid #eee;padding-top:20px;text-align:center">
-                <p style="color:#999;font-size:12px;margin:0">
-                  Este e-mail foi enviado automaticamente pelo sistema VB Conexao.<br>
-                  Se tem alguma duvida, responda a este e-mail.
-                </p>
-              </div>
-            </div>
-          </div>
-        `,
+        nome: sub.nome,
+        email: sub.email,
       }),
     });
 
-    const responseText = await emailRes.text();
-    let emailData = {};
-    try { emailData = JSON.parse(responseText); } catch (e) { emailData = { error: responseText }; }
+    const emailData = await emailRes.json();
 
     if (emailRes.ok && emailData.success) {
       emailStatus = " E-mail enviado!";
     } else {
-      emailStatus = " (E-mail: " + (emailData.error || "erro " + emailRes.status) + ")";
-      console.error("Resend error:", emailRes.status, responseText);
+      emailStatus = " (E-mail: " + (emailData.message || "erro " + emailRes.status) + ")";
+      console.error("PHP error:", emailRes.status, emailData);
     }
   } catch (err) {
     emailStatus = " (E-mail: falha na conexao - " + err.message + ")";
