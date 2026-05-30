@@ -115,7 +115,7 @@ async function confirmSubscriber(id) {
   // Enviar e-mail de confirmacao via PHP
   let emailStatus = "";
   try {
-    const emailRes = await fetch("/api/confirmar.php", {
+    const emailRes = await fetch("../api/confirmar.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

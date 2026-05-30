@@ -7,17 +7,17 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . "/vendor/PHPMailer/Exception.php";
-require __DIR__ . "/vendor/PHPMailer/PHPMailer.php";
-require __DIR__ . "/vendor/PHPMailer/SMTP.php";
+require __DIR__ . '/vendor/PHPMailer/Exception.php';
+require __DIR__ . '/vendor/PHPMailer/PHPMailer.php';
+require __DIR__ . '/vendor/PHPMailer/SMTP.php';
 
 // --- Config SMTP ---
-define("SMTP_HOST", "mail.vbc.ao");
-define("SMTP_PORT", 465);
-define("SMTP_USER", "eventos@vbc.ao");
-define("SMTP_PASS", "+-Passw0rd2026");
-define("SMTP_FROM", "eventos@vbc.ao");
-define("SMTP_FROM_NAME", "VB Conexao");
+define("SMTP_HOST", getenv("SMTP_HOST") ?: "mail.vbc.ao");
+define("SMTP_PORT", getenv("SMTP_PORT") ?: 465);
+define("SMTP_USER", getenv("SMTP_USER") ?: "eventos@vbc.ao");
+define("SMTP_PASS", getenv("SMTP_PASS") ?: "-+Passw0rd2026");
+define("SMTP_FROM", getenv("SMTP_FROM") ?: "eventos@vbc.ao");
+define("SMTP_FROM_NAME", getenv("SMTP_FROM_NAME") ?: "VB Conexao");
 
 // --- CORS Headers ---
 header("Access-Control-Allow-Origin: *");
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 // --- Ler body JSON ---
 $input = json_decode(file_get_contents("php://input"), true);
 
-if (!$input) {
+if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "JSON invalido"]);
     exit;
@@ -141,6 +141,13 @@ $html = '
 </div>
 </body>
 </html>';
+
+// --- Validar config SMTP ---
+if (SMTP_PASS === "") {
+    http_response_code(500);
+    echo json_encode(["success" => false, "message" => "Configuracao SMTP incompleta"]);
+    exit;
+}
 
 // --- Enviar via PHPMailer SMTP ---
 $mail = new PHPMailer(true);

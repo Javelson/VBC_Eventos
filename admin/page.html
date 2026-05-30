@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagina - FortiGate Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../admin-style.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Top Bar -->
+    <header class="admin-topbar">
+      <a href="../index.html" class="admin-topbar-brand">
+        <img src="../public/logotipo/vbc.logo.jpeg" alt="VB Conexao" class="admin-topbar-logo site-logo" />
+        <span class="admin-topbar-title">Painel Admin</span>
+      </a>
+      <div class="admin-topbar-user">
+        <span class="admin-topbar-email" id="user-email"></span>
+        <button class="btn-logout" id="btn-logout">Sair</button>
+      </div>
+    </header>
+
+    <!-- Nav Menu -->
+    <nav class="admin-nav">
+      <a href="index.html" class="admin-nav-link">Dashboard</a>
+      <a href="events.html" class="admin-nav-link">Eventos</a>
+      <a href="page.html" class="admin-nav-link active">Pagina</a>
+    </nav>
+
+    <!-- Content -->
+    <main class="admin-content">
+
+      <!-- Logo Manager -->
+      <div class="flyer-manager">
+        <div class="flyer-manager-title">Logo do Site</div>
+        <div id="logo-area">
+          <div class="flyer-upload-area" id="logo-upload">
+            <div class="flyer-upload-text">Arrasta uma imagem ou clica para carregar o logo</div>
+            <input type="file" id="logo-input" accept="image/*" style="display:none" />
+            <button class="btn-action btn-edit" id="btn-logo-select">Selecionar Ficheiro</button>
+          </div>
+          <div class="flyer-preview hidden" id="logo-preview">
+            <img id="logo-img" src="" alt="Logo" />
+            <div style="margin-top:0.75rem;display:flex;gap:0.5rem;justify-content:center">
+              <button class="btn-action btn-edit" id="btn-logo-replace">Substituir</button>
+              <button class="btn-action btn-delete" id="btn-logo-remove">Remover</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logo Size Control -->
+        <div style="margin-top:1.5rem">
+          <label class="form-label">Tamanho do Logo</label>
+          <div style="display:flex;align-items:center;gap:1rem;margin-top:0.5rem">
+            <span style="font-size:0.8rem;color:#9ca3af;min-width:24px">24px</span>
+            <input type="range" id="logo-size" min="24" max="200" value="100" style="flex:1;accent-color:#6366f1" />
+            <span style="font-size:0.8rem;color:#9ca3af;min-width:32px">200px</span>
+          </div>
+          <div style="text-align:center;margin-top:0.5rem;font-size:0.9rem;color:#d1d5db">
+            Atual: <strong id="logo-size-value">100px</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Manager -->
+      <div class="flyer-manager" style="margin-top:1.5rem">
+        <div class="flyer-manager-title">Dizeres do Footer</div>
+        <form id="footer-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="footer-text-input">Texto principal</label>
+            <input type="text" id="footer-text-input" class="form-input" placeholder="Ex: &copy; 2026 VB Conexao" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="footer-credit-input">Texto secundario</label>
+            <input type="text" id="footer-credit-input" class="form-input" placeholder="Ex: Workshop organizado por VB Conexao" />
+          </div>
+          <div class="error-text" id="footer-error" style="margin-top:0.5rem"></div>
+          <div style="margin-top:1rem;display:flex;justify-content:flex-end">
+            <button type="submit" class="btn-action btn-edit" style="padding:0.5rem 1.5rem;font-size:0.9rem">Guardar Footer</button>
+          </div>
+        </form>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="../admin-page.js"></script>
+  <script type="module" src="../site-settings.js"></script>
+</body>
+</html>
