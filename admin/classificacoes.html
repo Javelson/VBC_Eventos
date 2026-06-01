@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classificacoes - Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../admin-style.css" />
+  <style>
+    .feedback-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .feedback-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .feedback-stats-grid { grid-template-columns: repeat(5, 1fr); }
+    }
+    .feedback-stat-card {
+      background-color: var(--white);
+      border: 1px solid var(--vbc-gray);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .feedback-stat-label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .feedback-stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--vbc-blue-dark);
+    }
+    .feedback-stat-value.avg { color: #f59e0b; }
+    .star-display {
+      color: #f59e0b;
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
+    .comment-cell {
+      max-width: 250px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .table-header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-pdf {
+      background-color: #fee2e2;
+      color: var(--red);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+    .btn-pdf:hover {
+      background-color: #fecaca;
+    }
+    .empty-comment {
+      color: #9ca3af;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Top Bar -->
+    <header class="admin-topbar">
+      <a href="../index.html" class="admin-topbar-brand">
+        <img src="../public/logotipo/vbc.logo.jpeg" alt="VB Conexao" class="admin-topbar-logo site-logo" />
+        <span class="admin-topbar-title">Painel Admin</span>
+      </a>
+      <div class="admin-topbar-user">
+        <span class="admin-topbar-email" id="user-email"></span>
+        <button class="btn-logout" id="btn-logout">Sair</button>
+      </div>
+    </header>
+
+    <!-- Nav Menu -->
+    <nav class="admin-nav">
+      <a href="index.html" class="admin-nav-link">Dashboard</a>
+      <a href="events.html" class="admin-nav-link">Eventos</a>
+      <a href="page.html" class="admin-nav-link">Pagina</a>
+      <a href="classificacoes.html" class="admin-nav-link active">Classificacoes</a>
+    </nav>
+
+    <!-- Content -->
+    <main class="admin-content">
+      <!-- Stats -->
+      <div class="feedback-stats-grid">
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-label">Total</div>
+          <div class="feedback-stat-value" id="fb-total">0</div>
+        </div>
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-label">Media</div>
+          <div class="feedback-stat-value avg" id="fb-avg">--</div>
+        </div>
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-label">5 Estrelas</div>
+          <div class="feedback-stat-value" id="fb-5">0</div>
+        </div>
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-label">4 Estrelas</div>
+          <div class="feedback-stat-value" id="fb-4">0</div>
+        </div>
+        <div class="feedback-stat-card">
+          <div class="feedback-stat-label">3 ou menos</div>
+          <div class="feedback-stat-value" id="fb-low">0</div>
+        </div>
+      </div>
+
+      <!-- Feedback Table -->
+      <div class="table-container">
+        <div class="table-header">
+          <div class="table-title">Classificacoes</div>
+          <div class="table-header-actions">
+            <button class="btn-action btn-edit" id="btn-refresh">Atualizar</button>
+            <button class="btn-pdf" id="btn-pdf">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:4px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Baixar PDF
+            </button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Classificacao</th>
+                <th>Comentario</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody id="feedback-body">
+              <tr><td colspan="4" class="empty-state"><div class="empty-state-icon">&#11088;</div><div>A carregar...</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="../admin-classificacoes.js"></script>
+  <script type="module" src="../site-settings.js"></script>
+</body>
+</html>

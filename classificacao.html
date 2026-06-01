@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classificacao do Evento - VB Conexao</title>
+  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Feedback-specific styles */
+    .section-feedback {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feedback-hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(to bottom right, var(--vbc-gray-light), var(--white), var(--vbc-gray-light));
+    }
+
+    .feedback-card {
+      background-color: var(--white);
+      border-radius: 1rem;
+      border: 1px solid var(--vbc-gray);
+      padding: 2.5rem 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .feedback-title {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--vbc-blue-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .feedback-title .accent {
+      color: var(--vbc-turquoise);
+    }
+
+    .feedback-subtitle {
+      color: #6b7280;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    /* Star Rating */
+    .star-rating {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      direction: rtl;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      cursor: pointer;
+      font-size: 2.5rem;
+      color: var(--vbc-gray);
+      transition: color 0.2s, transform 0.2s;
+      line-height: 1;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+      color: #f59e0b;
+      transform: scale(1.1);
+    }
+
+    .rating-text {
+      font-size: 0.95rem;
+      color: var(--vbc-blue);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      min-height: 1.5rem;
+    }
+
+    /* Feedback form fields */
+    .feedback-form .form-group {
+      text-align: left;
+    }
+
+    .feedback-form textarea.form-input {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Success state */
+    .feedback-success {
+      display: none;
+    }
+
+    .feedback-success .success-icon {
+      width: 80px;
+      height: 80px;
+      font-size: 2.5rem;
+    }
+
+    .feedback-success .success-title {
+      font-size: 1.75rem;
+    }
+
+    .average-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: var(--vbc-gray-light);
+      border-radius: 0.75rem;
+    }
+
+    .average-rating .star {
+      color: #f59e0b;
+      font-size: 1.25rem;
+    }
+
+    .average-rating .value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--vbc-blue-dark);
+    }
+
+    .average-rating .count {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 640px) {
+      .feedback-card {
+        padding: 1.5rem 1.25rem;
+      }
+
+      .star-rating label {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header">
+    <a href="/" class="header-brand">
+      <img src="public/logotipo/vbc.logo.jpeg" alt="VB Conexao" class="header-logo site-logo" />
+    </a>
+  </header>
+
+  <!-- ===================== FEEDBACK FORM ===================== -->
+  <section class="section-feedback">
+    <div class="feedback-hero">
+      <div class="feedback-card">
+        <!-- Form Content -->
+        <div id="feedback-content">
+          <h1 class="feedback-title">Classifica o <span class="accent">evento</span></h1>
+          <p class="feedback-subtitle">Partilha a tua experiencia sobre o workshop</p>
+
+          <form id="feedback-form" class="feedback-form" novalidate>
+            <!-- Star Rating -->
+            <div class="star-rating">
+              <input type="radio" id="star5" name="rating" value="5" />
+              <label for="star5" title="Excelente">&#9733;</label>
+              <input type="radio" id="star4" name="rating" value="4" />
+              <label for="star4" title="Muito Bom">&#9733;</label>
+              <input type="radio" id="star3" name="rating" value="3" />
+              <label for="star3" title="Bom">&#9733;</label>
+              <input type="radio" id="star2" name="rating" value="2" />
+              <label for="star2" title="Razoavel">&#9733;</label>
+              <input type="radio" id="star1" name="rating" value="1" />
+              <label for="star1" title="Fraco">&#9733;</label>
+            </div>
+            <div class="rating-text" id="rating-text"></div>
+            <div class="error-text" id="rating-error" style="margin-bottom:1rem;"></div>
+
+            <!-- Name (required) -->
+            <div class="form-group">
+              <label class="form-label" for="nome">Nome</label>
+              <input type="text" id="nome" class="form-input" placeholder="Ex: Joao Silva" required />
+              <div class="error-text" id="nome-error"></div>
+            </div>
+
+            <!-- Comment -->
+            <div class="form-group">
+              <label class="form-label" for="comentario">Comentario</label>
+              <textarea id="comentario" class="form-input" placeholder="O que achaste do evento? O que gostarias de ver melhorado?"></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit" class="btn-submit">Enviar Classificacao</button>
+          </form>
+        </div>
+
+        <!-- Success Message -->
+        <div id="feedback-success" class="feedback-success">
+          <div class="success-icon">&#10003;</div>
+          <div class="success-title">Obrigado!</div>
+          <p class="success-text">A tua classificacao foi registada com sucesso.</p>
+          <div class="average-rating" id="average-rating" style="display:none;">
+            <span class="star">&#9733;</span>
+            <span class="value" id="avg-value">--</span>
+            <span class="count" id="avg-count"></span>
+          </div>
+          <button id="btn-another" class="btn-secondary" style="margin-top:1.5rem;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nova classificacao
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="public/logotipo/vbc.logo.jpeg" alt="VB Conexao" class="footer-logo site-logo" />
+        <div>
+          <div class="footer-text" id="footer-text">&copy; 2026 VB Conexao</div>
+          <div class="footer-credit" id="footer-credit">Workshop organizado por VB Conexao</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script type="module" src="classificacao.js"></script>
+  <script type="module" src="site-settings.js"></script>
+</body>
+</html>

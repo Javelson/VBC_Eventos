@@ -283,6 +283,12 @@ input {
 }
 
 /* --- CTA Button --- */
+.cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -299,6 +305,11 @@ input {
 
 .btn-primary:hover {
   background-color: var(--vbc-blue-dark);
+}
+
+.cta-feedback {
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
 }
 
 /* --- Flyer --- */
